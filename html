@@ -1,0 +1,54 @@
+<script src="https://cdn.jsdelivr.net/npm/golos-js@0.6.1/dist/golos.min.js"></script>
+<script>
+	golos.config.set('websocket', 'wss://ws.testnet.golos.io');
+golos.config.set('chain_id', '5876894a41e6361bde2e73278f07340f2eb8b41c2facd29099de9deef6cdb679');
+</script>
+
+
+<script>
+	var wif = '5KL49WjR4CgdNuQTsNKTUbhWfwrhCkZk23REAKuuWJFV4RVXQrM'; // WIF Приватный ключи для доступа к аккаунту.
+	var author = 'way2share1'; // Автор поста.
+	//var permlink = '';// Ссылка на автора
+	
+	function sendPost(){
+		var body = 'post'; // Содержимое поста
+		//var author =''; // Указывает автора 
+		var title = 'postest';// Название поста
+		var permlink = 'pos-sadsd';// ссылка на пост
+		var parentPermlink = '';// Тэг 
+		golos.broadcast.comment(wif, '', parentPermlink, author, permlink, title, body, '', function(err, result) {
+		    if ( ! err ) {
+		    	console.log(result);
+		    } else console.error(err);
+    	});
+	}
+
+	//Для создания поста используем PARENTPERMLINK и PERMLINK, для создания комментария используем PERMLINK предыдущего поста и указываем его как PARENTPERMLINK
+	function sendComment(){
+		var body = 'ееее'; // содержимое 
+		//var author =''; // автор
+		var parentPermlink = 'jkjasdasd';// ссылка на комментируемый пост
+		var parentAuthor = 'way2share1';// адресат
+		var title = 'test2';// название 
+		var permlink = 'qwertyachckjcnskjcbskjbhjscbsh';// ссылка
+		golos.broadcast.comment(wif, parentAuthor, parentPermlink, author, permlink, title, body, '', function(err, result) {
+		    if ( ! err ) {
+		    	console.log(result)
+		    } else console.error(err);
+    	});
+	}
+	//username - автор, permlink - ссылка на комментарий
+	function getContent(username, permlink){
+		golos.api.getContent(username, permlink, function(err, result) {
+            if (!err){
+            	console.log(result)
+        	}
+    	});
+	}
+	//username - автор, permlink - ссылка на пост
+	function getReplies(username, permlink){
+		golos.api.getContentReplies(username, permlink, function(err, result) {
+  			console.log(err, result);
+		});
+	}
+</script>
